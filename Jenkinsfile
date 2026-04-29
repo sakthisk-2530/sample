@@ -1,14 +1,6 @@
 pipeline {
     agent {label 'node1'} 
 
-    stages {
-
-        stage('Clone Repository') {
-            steps {
-                echo "Cloning repo..."
-                git 'https://github.com/sakthisk-2530/sample.git'
-            }
-        }
 
         stage('List Files') {
             steps {
