@@ -1,6 +1,7 @@
 pipeline {
-    agent {label 'node1'} 
+    agent any
 
+    stages {
 
         stage('List Files') {
             steps {
@@ -28,7 +29,7 @@ pipeline {
 
         stage('Show Endpoint') {
             steps {
-                echo "Website URL: http://15.207.54.238"
+                echo "Website URL: http://13.201.123.45"
             }
         }
     }
