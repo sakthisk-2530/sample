@@ -1,35 +1,43 @@
 pipeline {
     agent {label 'node1'} 
 
+    triggers {          
+        githubPush()
+    }
+
     stages {
 
-        stage('List Files') {
+        stage('Clone Repository') {
             steps {
-                echo "Listing files..."
-                sh 'ls -l'
+                sh 'rm -rf sample'
+                sh 'git clone https://github.com/sakthisk-2530/sample.git'
             }
         }
 
-        stage('Prepare Directory') {
+        stage('List Files') {
             steps {
-                echo "Preparing directory..."
-                sh 'mkdir -p /var/www/html'
+                sh 'ls -l sample'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo "Deploying project..."
                 sh '''
                 rm -rf /var/www/html/*
-                cp -r * /var/www/html/
+                cp -r sample/* /var/www/html/
                 '''
+            }
+        }
+
+        stage('Reload Nginx') {
+            steps {
+                sh 'sudo systemctl restart nginx'
             }
         }
 
         stage('Show Endpoint') {
             steps {
-                echo "Website URL: http://13.201.123.45"
+                echo "http://13.201.123.45"
             }
         }
     }
